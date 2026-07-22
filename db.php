@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$user = "sjamal6";   // Replace with your GSU username
-$pass = "sjamal6"; // Replace with your MySQL password
-$db   = "sjamal6";                // Keep this if your database is named myDB
+$user = "sjamal6"; 
+$pass = "sjamal6"; 
+$db   = "sjamal6";                
 
 $conn = new mysqli($host, $user, $pass, $db);
 
