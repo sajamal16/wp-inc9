@@ -41,23 +41,23 @@ Employee Records
 <tr>
 
 <td>
-<?= $row["emp_name"] ?>
+<?= htmlspecialchars($row["emp_name"]) ?>
 </td>
 
 <td>
-<?= $row["job_name"] ?>
+<?= htmlspecialchars($row["job_name"]) ?>
 </td>
 
 <td>
-<?= $row["salary"] ?>
+<?= htmlspecialchars($row["salary"]) ?>
 </td>
 
 <td>
-<?= $row["hire_date"] ?>
+<?= htmlspecialchars($row["hire_date"]) ?>
 </td>
 
 <td>
-<?= $row["department_name"] ?>
+<?= htmlspecialchars($row["department_name"]) ?>
 </td>
 
 </tr>
