@@ -119,7 +119,7 @@ Create Employee
 </button>
 
 
-<a class="demo-link" href="employee-demo.php">
+<a class="demo-link" href="read-employee.php">
 View employees.
 </a>
 
