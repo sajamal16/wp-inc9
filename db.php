@@ -10,5 +10,6 @@ if ($conn->connect_error) {
     die("DB Error: " . $conn->connect_error);
 }
 
+echo "Database connection successful.";
 // $conn is now available in any file that requires this
 ?>
