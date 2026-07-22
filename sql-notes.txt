@@ -1,0 +1,365 @@
+MariaDB [sjamal6]> SHOW TABLES;
++-------------------+
+| Tables_in_sjamal6 |
++-------------------+
+| BOOKS             |
+| STUDENTS          |
++-------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> CREATE TABLE IF NOT EXISTS employees (
+    ->   emp_id          INT AUTO_INCREMENT PRIMARY KEY,
+    ->   emp_name        VARCHAR(100) NOT NULL,
+    ->   job_name        VARCHAR(100) NOT NULL,
+    ->   salary          DECIMAL(10,2) NOT NULL,
+    ->   hire_date       DATE NOT NULL,
+    ->   department_id   INT NOT NULL,
+    ->   department_name VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [sjamal6]> SHOW TABLES;
++-------------------+
+| Tables_in_sjamal6 |
++-------------------+
+| BOOKS             |
+| STUDENTS          |
+| employees         |
++-------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> INSERT INTO employees
+    ->   (emp_name, job_name, salary, hire_date, department_id, department_name)
+    -> VALUES
+    ->   ('Ana Lopez',   'Developer', 73000.00, '2025-09-15', 1, 'Engineering'),
+    ->   ('David Kim',   'Analyst',   68000.00, '2025-11-01', 2, 'Finance'),
+    ->   ('Sara Cole',   'Designer',  71000.00, '2026-01-08', 3, 'Marketing'),
+    ->   ('James Reed',  'Manager',   90000.00, '2024-06-20', 1, 'Engineering');
+Query OK, 4 rows affected (0.001 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [sjamal6]> SHOW employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'employees' at line 1
+MariaDB [sjamal6]> SHOW EMPLOYEES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'EMPLOYEES' at line 1
+MariaDB [sjamal6]> SHOW TABLE employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'employees' at line 1
+MariaDB [sjamal6]> DESCRIBE employees;
++-----------------+---------------+------+-----+---------+----------------+
+| Field           | Type          | Null | Key | Default | Extra          |
++-----------------+---------------+------+-----+---------+----------------+
+| emp_id          | int(11)       | NO   | PRI | NULL    | auto_increment |
+| emp_name        | varchar(100)  | NO   |     | NULL    |                |
+| job_name        | varchar(100)  | NO   |     | NULL    |                |
+| salary          | decimal(10,2) | NO   |     | NULL    |                |
+| hire_date       | date          | NO   |     | NULL    |                |
+| department_id   | int(11)       | NO   |     | NULL    |                |
+| department_name | varchar(100)  | NO   |     | NULL    |                |
++-----------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> SELECT * FROM employees
+    -> ;
++--------+------------+-----------+----------+------------+---------------+-----------------+
+| emp_id | emp_name   | job_name  | salary   | hire_date  | department_id | department_name |
++--------+------------+-----------+----------+------------+---------------+-----------------+
+|      1 | Ana Lopez  | Developer | 73000.00 | 2025-09-15 |             1 | Engineering     |
+|      2 | David Kim  | Analyst   | 68000.00 | 2025-11-01 |             2 | Finance         |
+|      3 | Sara Cole  | Designer  | 71000.00 | 2026-01-08 |             3 | Marketing       |
+|      4 | James Reed | Manager   | 90000.00 | 2024-06-20 |             1 | Engineering     |
++--------+------------+-----------+----------+------------+---------------+-----------------+
+4 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> SELECT emp_id, emp_name, job_name, salary
+    -> FROM employees
+    -> WHERE salary > 70000
+    -> ORDER BY salary DESC;
++--------+------------+-----------+----------+
+| emp_id | emp_name   | job_name  | salary   |
++--------+------------+-----------+----------+
+|      4 | James Reed | Manager   | 90000.00 |
+|      1 | Ana Lopez  | Developer | 73000.00 |
+|      3 | Sara Cole  | Designer  | 71000.00 |
++--------+------------+-----------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> SELECT emp_id, emp_name, job_name, salary
+    -> FROM employees
+    -> WHERE salary > 70000
+    -> ORDER BY salary DESC;
++--------+------------+-----------+----------+
+| emp_id | emp_name   | job_name  | salary   |
++--------+------------+-----------+----------+
+|      4 | James Reed | Manager   | 90000.00 |
+|      1 | Ana Lopez  | Developer | 73000.00 |
+|      3 | Sara Cole  | Designer  | 71000.00 |
++--------+------------+-----------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> -- Show all employees hired in 2025
+MariaDB [sjamal6]> SELECT emp_name, hire_date
+    -> FROM employees
+    -> WHERE hire_date BETWEEN '2025-01-01' AND '2025-12-31'
+    -> ORDER BY hire_date ASC;
++-----------+------------+
+| emp_name  | hire_date  |
++-----------+------------+
+| Ana Lopez | 2025-09-15 |
+| David Kim | 2025-11-01 |
++-----------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> -- Show employees from two departments
+MariaDB [sjamal6]> SELECT emp_name, department_name, salary
+    -> FROM employees
+    -> WHERE department_name IN ('Engineering', 'Marketing')
+    -> ORDER BY department_name, salary DESC;
++------------+-----------------+----------+
+| emp_name   | department_name | salary   |
++------------+-----------------+----------+
+| James Reed | Engineering     | 90000.00 |
+| Ana Lopez  | Engineering     | 73000.00 |
+| Sara Cole  | Marketing       | 71000.00 |
++------------+-----------------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> -- Count all rows
+MariaDB [sjamal6]> SELECT COUNT(*) AS total_employees FROM employees;
++-----------------+
+| total_employees |
++-----------------+
+|               4 |
++-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [sjamal6]> 
+MariaDB [sjamal6]> -- Average salary
+MariaDB [sjamal6]> SELECT AVG(salary) AS avg_salary FROM employees;
++--------------+
+| avg_salary   |
++--------------+
+| 75500.000000 |
++--------------+
+1 row in set (0.000 sec)
+
+MariaDB [sjamal6]> 
+MariaDB [sjamal6]> -- Highest and lowest salary
+MariaDB [sjamal6]> SELECT MAX(salary) AS highest, MIN(salary) AS lowest
+    -> FROM employees;
++----------+----------+
+| highest  | lowest   |
++----------+----------+
+| 90000.00 | 68000.00 |
++----------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [sjamal6]> -- Filter by department
+MariaDB [sjamal6]> SELECT emp_name, salary
+    -> FROM employees
+    -> WHERE department_name = 'Engineering'
+    -> ORDER BY salary DESC;
++------------+----------+
+| emp_name   | salary   |
++------------+----------+
+| James Reed | 90000.00 |
+| Ana Lopez  | 73000.00 |
++------------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> 
+MariaDB [sjamal6]> -- Group by department with avg salary
+MariaDB [sjamal6]> SELECT department_name, COUNT(*) AS emp_count,
+    ->        AVG(salary) AS avg_sal
+    -> FROM employees
+    -> GROUP BY department_name;
++-----------------+-----------+--------------+
+| department_name | emp_count | avg_sal      |
++-----------------+-----------+--------------+
+| Engineering     |         2 | 81500.000000 |
+| Finance         |         1 | 68000.000000 |
+| Marketing       |         1 | 71000.000000 |
++-----------------+-----------+--------------+
+3 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> -- Count employees by department, highest first
+MariaDB [sjamal6]> SELECT department_name,
+    ->        COUNT(*) AS emp_count
+    -> FROM employees
+    -> GROUP BY department_name
+    -> ORDER BY emp_count DESC;
++-----------------+-----------+
+| department_name | emp_count |
++-----------------+-----------+
+| Engineering     |         2 |
+| Marketing       |         1 |
+| Finance         |         1 |
++-----------------+-----------+
+3 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> -- Search by pattern and salary range
+MariaDB [sjamal6]> SELECT emp_name, job_name, salary
+    -> FROM employees
+    -> WHERE job_name LIKE '%er%'
+    ->   AND salary BETWEEN 70000 AND 95000
+    -> ORDER BY salary DESC;
++------------+-----------+----------+
+| emp_name   | job_name  | salary   |
++------------+-----------+----------+
+| James Reed | Manager   | 90000.00 |
+| Ana Lopez  | Developer | 73000.00 |
+| Sara Cole  | Designer  | 71000.00 |
++------------+-----------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> -- Departments with avg salary above 70000
+MariaDB [sjamal6]> SELECT department_name,
+    ->        COUNT(*) AS emp_count,
+    ->        AVG(salary) AS avg_salary
+    -> FROM employees
+    -> GROUP BY department_name
+    -> HAVING AVG(salary) > 70000
+    -> ORDER BY avg_salary DESC;
++-----------------+-----------+--------------+
+| department_name | emp_count | avg_salary   |
++-----------------+-----------+--------------+
+| Engineering     |         2 | 81500.000000 |
+| Marketing       |         1 | 71000.000000 |
++-----------------+-----------+--------------+
+2 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> -- Salary band classification using CASE
+MariaDB [sjamal6]> SELECT emp_name,
+    ->        salary,
+    ->        CASE
+    ->          WHEN salary >= 85000 THEN 'High'
+    ->          WHEN salary >= 70000 THEN 'Medium'
+    ->          ELSE 'Standard'
+    ->        END AS salary_band
+    -> FROM employees
+    -> ORDER BY salary DESC;
++------------+----------+-------------+
+| emp_name   | salary   | salary_band |
++------------+----------+-------------+
+| James Reed | 90000.00 | High        |
+| Ana Lopez  | 73000.00 | Medium      |
+| Sara Cole  | 71000.00 | Medium      |
+| David Kim  | 68000.00 | Standard    |
++------------+----------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [sjamal6]> -- Salary band classification using CASE
+MariaDB [sjamal6]> SELECT emp_name,
+    ->        salary,
+    ->        CASE
+    ->          WHEN salary >= 85000 THEN 'High'
+    ->          WHEN salary >= 70000 THEN 'Medium'
+    ->          ELSE 'Standard'
+    ->        END AS salary_band
+    -> FROM employees
+    -> ORDER BY salary DESC;
++------------+----------+-------------+
+| emp_name   | salary   | salary_band |
++------------+----------+-------------+
+| James Reed | 90000.00 | High        |
+| Ana Lopez  | 73000.00 | Medium      |
+| Sara Cole  | 71000.00 | Medium      |
+| David Kim  | 68000.00 | Standard    |
++------------+----------+-------------+
+4 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> 1) FROM (choose table)
+    -> 2) WHERE (filter rows)
+    -> 3) GROUP BY (form groups)
+    -> 4) SELECT (choose output columns)
+    -> 5) ORDER BY (sort final output)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1) FROM (choose table)
+2) WHERE (filter rows)
+3) GROUP BY (form groups)
+4) SE...' at line 1
+MariaDB [sjamal6]> Connection to codd.cs.gsu.edu closed by remote host.
+Connection to codd.cs.gsu.edu closed.
+client_loop: send disconnect: Broken pipe
+sajamal16@Sakibs-MacBook-Air ~ % ssh sjamal6@codd.cs.gsu.edu
+sjamal6@codd.cs.gsu.edu's password: 
+   +
+   |   GSU Computer Science
+   |   Instructional Server
+   |   CODD.cs.gsu.edu
+   +
+Activate the web console with: systemctl enable --now cockpit.socket
+
+Last login: Wed Jul 22 15:36:41 2026 from 131.96.47.156
+[sjamal6@gsuad.gsu.edu@codd ~]$ mysql -u sjamal6 -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 362883
+Server version: 10.3.39-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW TABLES;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| sjamal6            |
++--------------------+
+2 rows in set (0.003 sec)
+
+MariaDB [(none)]> USE sjamal6
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [sjamal6]> SHOW DATABASES
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| sjamal6            |
++--------------------+
+2 rows in set (0.003 sec)
+
+MariaDB [sjamal6]> SHOW TABLES;
++-------------------+
+| Tables_in_sjamal6 |
++-------------------+
+| BOOKS             |
+| STUDENTS          |
+| employees         |
++-------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> USE employees;
+ERROR 1044 (42000): Access denied for user 'sjamal6'@'localhost' to database 'employees'
+MariaDB [sjamal6]> SELECT * FROM employees;
++--------+------------+-----------+----------+------------+---------------+-----------------+
+| emp_id | emp_name   | job_name  | salary   | hire_date  | department_id | department_name |
++--------+------------+-----------+----------+------------+---------------+-----------------+
+|      1 | Ana Lopez  | Developer | 73000.00 | 2025-09-15 |             1 | Engineering     |
+|      2 | David Kim  | Analyst   | 68000.00 | 2025-11-01 |             2 | Finance         |
+|      3 | Sara Cole  | Designer  | 71000.00 | 2026-01-08 |             3 | Marketing       |
+|      4 | James Reed | Manager   | 90000.00 | 2024-06-20 |             1 | Engineering     |
++--------+------------+-----------+----------+------------+---------------+-----------------+
+4 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> SELECT * FROM employees;
++--------+---------------+------------+----------+------------+---------------+-----------------+
+| emp_id | emp_name      | job_name   | salary   | hire_date  | department_id | department_name |
++--------+---------------+------------+----------+------------+---------------+-----------------+
+|      1 | Ana Lopez     | Developer  | 73000.00 | 2025-09-15 |             1 | Engineering     |
+|      2 | David Kim     | Analyst    | 68000.00 | 2025-11-01 |             2 | Finance         |
+|      3 | Sara Cole     | Designer   | 71000.00 | 2026-01-08 |             3 | Marketing       |
+|      4 | James Reed    | Manager    | 90000.00 | 2024-06-20 |             1 | Engineering     |
+|      5 | Ishmam Mahmud | Consultant | 65000.00 | 1994-01-12 |             3 | Marketing       |
+|      6 | Sabiha Jamal  | Accountant | 80000.00 | 2026-06-19 |             2 | Finance         |
++--------+---------------+------------+----------+------------+---------------+-----------------+
+6 rows in set (0.000 sec)
+
+MariaDB [sjamal6]> 
