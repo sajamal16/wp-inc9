@@ -1,4 +1,4 @@
-// form to add a new employee, or link to existing employees
+Form to add a new employee, or link to existing employees
 <?php
 require "db.php";
 
@@ -134,7 +134,7 @@ Enter the employee's information below.
 Add an employee.
 </button>
 
-<a class="demo-link" href="read_employees.php">
+<a class="demo-link" href="read-employees.php">
 View all employees.
 </a>
 

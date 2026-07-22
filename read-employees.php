@@ -1,4 +1,4 @@
-// display record of all employees
+Display record of all employees
 <?php
 require "db.php";
 
@@ -70,7 +70,7 @@ Employee Records
 
 <br>
 
-<a class="demo-link" href="employee_demo.php">
+<a class="demo-link" href="employee-demo.php">
 Add an employee.
 </a>
 
