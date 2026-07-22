@@ -77,13 +77,13 @@ Employee Records
 <td>
 
 <a class="demo-link"
-href="update-employee.php?id=<?= $row['employee_id'] ?>">
+href="update-employee.php?id=<?= $row['emp_id'] ?>">
 Edit.
 </a>
 
 
 <a class="demo-link"
-href="delete-employee.php?id=<?= $row['employee_id'] ?>">
+href="delete-employee.php?id=<?= $row['emp_id'] ?>">
 Delete.
 </a>
 
